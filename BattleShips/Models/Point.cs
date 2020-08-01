@@ -8,13 +8,14 @@
 
         public Point(string coordinates)
         {
-            this.ParseCoorindates(coordinates);
+            this.Row = (int)(coordinates[0] - '@') - 1;
+            this.Col = int.Parse(coordinates.Substring(1)) - 1;
         }
 
-        private void ParseCoorindates(string coordinates)
+        public Point(int row, int col)
         {
-            this.Row = (int)(coordinates[0] - '@');
-            this.Col = int.Parse(coordinates.Substring(1));
+            this.Row = row;
+            this.Col = col;
         }
     }
 }

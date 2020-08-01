@@ -2,7 +2,7 @@
 {
     public class Destroyer : Ship
     {
-        public Destroyer(int length) : base(length)
+        public Destroyer(GameBoard gameBoard) : base(Constants.DestroyerSize, gameBoard)
         {
         }
     }

@@ -1,14 +1,12 @@
 ﻿namespace BattleShips.Contracts
 {
+    using BattleShips.Models;
+
     public interface IShip
     {
-        int Length { get; }
-
-        void TryToHit(string coordinates);
+        void TryToHit(Point coordinates);
 
         void DrawShip();
-
-        void CreateShip();
 
         bool IsDead();
     }

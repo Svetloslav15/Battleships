@@ -1,28 +1,148 @@
 ﻿namespace BattleShips.Models
 {
     using BattleShips.Contracts;
+    using BattleShips.Enums;
+    using BattleShips.Services;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public abstract class Ship : IShip
     {
-        public int Length { get; }
+        public int Size { get; }
 
-        private IList<string> coordinates;
+        private IList<Point> coordinates;
+        private GameBoard gameBoard;
 
-        public Ship(int length)
+        private void createShip()
         {
-            this.Length = length;
-            this.coordinates = new List<string>();
+            HashSet<Direction> directions = RandomService.GenerateSequenceOfDirections();
+
+            //Generate starting point for the ship
+            Point firstPoint = RandomService.GeneratePoint();
+            while (this.gameBoard.IsPointFilled(firstPoint))
+            {
+                firstPoint = RandomService.GeneratePoint();
+            }
+            
+
+            //Generate the body of the ship
+            while (this.coordinates.Count < this.Size)
+            {
+                if (directions.Count == 0)
+                {
+                    directions = RandomService.GenerateSequenceOfDirections();
+                    firstPoint = RandomService.GeneratePoint();
+                }
+                Direction direction = directions.First();
+
+                switch (direction)
+                {
+                    case Direction.Top:
+                        {
+                            if (firstPoint.Row - this.Size >= 0)
+                            {
+                                int counter = 0;
+                                for (int row = firstPoint.Row; counter++ < this.Size; row--)
+                                {
+                                    Point point = new Point(row, firstPoint.Col);
+                                    if (this.gameBoard.IsPointFilled(point))
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                for (int row = firstPoint.Row; this.coordinates.Count < this.Size; row--)
+                                {
+                                    this.AddPoint(row, firstPoint.Col);
+                                }
+                            }
+                        }
+                        break;
+                    case Direction.Right:
+                        {
+                            if (firstPoint.Col + this.Size < Constants.BoardSize)
+                            {
+                                int counter = 0;
+                                for (int col = firstPoint.Col; counter++ < this.Size; col++)
+                                {
+                                    Point point = new Point(firstPoint.Row, col);
+                                    if (this.gameBoard.IsPointFilled(point))
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                for (int col = firstPoint.Col; this.coordinates.Count < this.Size; col++)
+                                {
+                                    this.AddPoint(firstPoint.Row, col);
+                                }
+                            }
+                        }
+                        break;
+                    case Direction.Bottom:
+                        {
+                            if (firstPoint.Row + 1 + this.Size < Constants.BoardSize)
+                            {
+                                int counter = 0;
+                                for (int row = firstPoint.Row; counter++ < this.Size; row++)
+                                {
+                                    Point point = new Point(row, firstPoint.Col);
+                                    if (this.gameBoard.IsPointFilled(point))
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                for (int row = firstPoint.Row; this.coordinates.Count < this.Size; row++)
+                                {
+                                    this.AddPoint(row, firstPoint.Col);
+                                }
+                            }
+                        }
+                        break;
+                    case Direction.Left:
+                        {
+                            if (firstPoint.Col - this.Size >= 0)
+                            {
+                                int counter = 0;
+                                for (int col = firstPoint.Col; counter++ < this.Size; col--)
+                                {
+                                    Point point = new Point(firstPoint.Row, col);
+                                    if (this.gameBoard.IsPointFilled(point))
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                for (int col = firstPoint.Col; this.coordinates.Count < this.Size; col--)
+                                {
+                                    this.AddPoint(firstPoint.Row, col);
+                                }
+                            }
+                        }
+                        break;
+                }
+                directions.Remove(direction);
+            }
+        }
+
+        public Ship(int size, GameBoard gameBoard)
+        {
+            this.Size = size;
+            this.gameBoard = gameBoard;
+            this.coordinates = new List<Point>();
+            this.createShip();
+            this.DrawShip();
         }
 
         public void DrawShip()
         {
-            for (int i = 0; i < this.Length; i++)
+            foreach (Point point in coordinates)
             {
-                Console.Write("*");
+                Console.SetCursorPosition(point.Col + 1, point. Row + 1);
+                Console.Write(Constants.ShotHit);
             }
-            Console.WriteLine();
         }
 
         public bool IsDead()
@@ -30,14 +150,19 @@
             throw new NotImplementedException();
         }
 
-        public void TryToHit(string coordinates)
+        public void TryToHit(Point coordinates)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateShip()
+        public void AddPoint(int row, int col)
         {
-            throw new NotImplementedException();
+            Point point = new Point(row, col);
+            this.coordinates.Add(point);
+            Console.SetCursorPosition(0, 20 + point.Row + point.Col);
+
+            Console.WriteLine($"row: {point.Row} {point.Col}");
+            this.gameBoard.SetFilledCoordinates(point);
         }
     }
 }

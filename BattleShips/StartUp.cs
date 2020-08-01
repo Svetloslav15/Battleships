@@ -1,6 +1,5 @@
 ﻿namespace BattleShips
 {
-    using BattleShips.Services;
     using BattleShips.Models;
     using System.Collections.Generic;
     using System;
@@ -9,22 +8,9 @@
     {
         static void Main()
         {
-            GameBoardService gameBoardService = new GameBoardService(Constants.BoardSize);
-            gameBoardService.DrawGameBoard();
+            GameBoard gameBoard = GameBoard.GetInstance();
 
-            List<Point> points = new List<Point>()
-            {
-                new Point("A1"),
-                new Point("G10"),
-                new Point("C7"),
-                new Point("E8"),
-                new Point("I1"),
-            };
-
-            foreach (var item in points)
-            {
-                Console.WriteLine($"Row: {item.Row}, Col: {item.Col}");
-            }
+            Console.SetCursorPosition(0, 20);
         }
     }
 }
