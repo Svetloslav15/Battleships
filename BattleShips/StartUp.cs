@@ -1,6 +1,8 @@
 ﻿namespace BattleShips
 {
     using BattleShips.Services;
+    using System;
+    using System.Collections.Generic;
 
     class StartUp
     {
@@ -8,6 +10,8 @@
         {
             GameBoardService gameBoardService = new GameBoardService(Constants.BoardSize);
             gameBoardService.DrawGameBoard();
+
+            Console.WriteLine((int)('A'));
         }
     }
 }
