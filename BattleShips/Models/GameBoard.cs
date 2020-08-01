@@ -8,16 +8,16 @@
 
     public class GameBoard : IGameBoard
     {
-        private int boardSize;
+        private readonly int boardSize;
         private static GameBoard gameBoardInstance;
 
-        private IList<Point> filledCoordinates;
-        private IList<Ship> ships;
+        private readonly HashSet<Point> filledCoordinates;
+        private readonly IList<Ship> ships;
 
         private GameBoard(int boardSize)
         {
             this.boardSize = boardSize;
-            this.filledCoordinates = new List<Point>();
+            this.filledCoordinates = new HashSet<Point>();
             this.DrawGameBoard();
             this.ships = new List<Ship>()
             {
@@ -54,7 +54,7 @@
             }
         }
 
-        public IList<Point> GetFilledCoordinates()
+        public HashSet<Point> GetFilledCoordinates()
         {
             return this.filledCoordinates;
         }
@@ -66,7 +66,7 @@
 
         public bool IsPointFilled(Point point)
         {
-            return this.filledCoordinates.Any(currPoint => currPoint.Row == point.Row && currPoint.Col == point.Col);
+            return this.filledCoordinates.FirstOrDefault(currPoint => currPoint.Row == point.Row && currPoint.Col == point.Col) != null;
         }
     }
 }

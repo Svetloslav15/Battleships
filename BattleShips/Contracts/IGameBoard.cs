@@ -12,6 +12,6 @@
 
         bool IsPointFilled(Point point);
 
-        IList<Point> GetFilledCoordinates();
+        HashSet<Point> GetFilledCoordinates();
     }
 }
