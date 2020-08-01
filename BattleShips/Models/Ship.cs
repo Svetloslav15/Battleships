@@ -2,12 +2,27 @@
 {
     using BattleShips.Contracts;
     using System;
+    using System.Collections.Generic;
 
     public abstract class Ship : IShip
     {
+        public int Length { get; }
+
+        private IList<string> coordinates;
+
+        public Ship(int length)
+        {
+            this.Length = length;
+            this.coordinates = new List<string>();
+        }
+
         public void DrawShip()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < this.Length; i++)
+            {
+                Console.Write("*");
+            }
+            Console.WriteLine();
         }
 
         public bool IsDead()
@@ -16,6 +31,11 @@
         }
 
         public void TryToHit(string coordinates)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateShip()
         {
             throw new NotImplementedException();
         }

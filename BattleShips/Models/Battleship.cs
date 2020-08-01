@@ -2,7 +2,10 @@
 {
     using System;
 
-    public class Battleship
+    public class Battleship : Ship
     {
+        public Battleship(int length) : base(length)
+        {
+        }
     }
 }
