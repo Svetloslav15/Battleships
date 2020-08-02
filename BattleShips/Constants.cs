@@ -9,5 +9,9 @@
         public const char NoShot = '.';
         public const char ShotMiss = '-';
         public const char ShotHit = 'X';
+        public const char Space = ' ';
+
+        public const string InputMessage = "Enter coordinates (row, col), e.g. A5 = ";
+        public const string GameOverMessage = "Well done! You completed the game in {0} shots";
     }
 }

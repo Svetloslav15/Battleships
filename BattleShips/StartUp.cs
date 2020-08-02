@@ -1,16 +1,11 @@
 ﻿namespace BattleShips
 {
-    using BattleShips.Models;
-    using System.Collections.Generic;
-    using System;
-
-    class StartUp
+    public class StartUp
     {
-        static void Main()
+        public static void Main()
         {
-            GameBoard gameBoard = GameBoard.GetInstance();
-
-            Console.SetCursorPosition(0, 20);
+            ProcessGame game = new ProcessGame();
+            game.StartGame();
         }
     }
 }

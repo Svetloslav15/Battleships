@@ -13,7 +13,7 @@
         public int Size { get; }
 
         private readonly IList<Point> coordinates;
-        private GameBoard gameBoard;
+        private readonly GameBoard gameBoard;
 
         private void CreateShip()
         {
@@ -150,7 +150,7 @@
             this.gameBoard = gameBoard;
             this.coordinates = new List<Point>();
             this.CreateShip();
-            this.DrawShip();
+            //this.DrawShip();
         }
 
         public void DrawShip()
@@ -162,23 +162,10 @@
             }
         }
 
-        public bool IsDead()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TryToHit(Point coordinates)
-        {
-            throw new NotImplementedException();
-        }
-
         private void AddPoint(int row, int col)
         {
             Point point = new Point(row, col);
             this.coordinates.Add(point);
-            Console.SetCursorPosition(0, 30 + this.gameBoard.GetFilledCoordinates().Count);
-
-            Console.WriteLine($"row: {point.Row} {point.Col} Count: {this.gameBoard.GetFilledCoordinates().Count}");
             this.gameBoard.SetFilledCoordinates(point);
         }
     }
