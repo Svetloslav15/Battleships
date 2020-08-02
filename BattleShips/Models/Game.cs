@@ -13,6 +13,16 @@
 
         public int MovesCount { get; set; }
 
+        private bool CheckUserInput(Point point)
+        {
+            if (point.Row < 0 || point.Row > Constants.BoardSize || point.Col < 0 || point.Col > Constants.BoardSize)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void DeleteLastCommandFromTheConsole()
         {
             Console.SetCursorPosition(0, 15);
@@ -46,7 +56,9 @@
                     string input = Console.ReadLine();
                     if (input.ToLower() == Constants.ShowCommand)
                     {
+                        this.IsGameOver = true;
                         this.GameBoard.Show();
+                        break;
                     }
                     else
                     {
@@ -66,16 +78,6 @@
                     this.GameOver();
                 }
             }
-        }
-
-        public bool CheckUserInput(Point point)
-        {
-            if (point.Row < 0 || point.Row > Constants.BoardSize || point.Col < 0 || point.Col > Constants.BoardSize)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public void StartGame()

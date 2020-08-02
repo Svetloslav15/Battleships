@@ -145,7 +145,6 @@
             }
         }
 
-
         public Ship(int size, GameBoard gameBoard)
         {
             this.Size = size;

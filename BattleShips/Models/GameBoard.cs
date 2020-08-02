@@ -41,18 +41,21 @@
 
         public void DrawGameBoard(char character, bool withShips)
         {
+            //Draw top border
             Console.SetCursorPosition(0, 0);
             for (int counter = 0; counter <= boardSize; counter++)
             {
                 Console.Write($"{counter}");
             }
             Console.WriteLine();
-            for (char row = 'A'; row <= 'J'; row++)
+
+            //Draw body
+            for (char row = Constants.FirstRowLetter; row <= Constants.LastRowLetter; row++)
             {
                 Console.Write($"{row}");
                 for (int col = 1; col <= boardSize; col++)
                 {
-                    if (withShips && this.GetFilledCoordinates().Any(ship => ship.Row == (int)(row - 'A') - 1 && ship.Col == col - 1))
+                    if (withShips && this.GetFilledCoordinates().Any(ship => ship.Row == (int)(row - Constants.FirstRowLetter) - 1 && ship.Col == col - 1))
                     {
                         Console.Write(Constants.ShotHit);
                     }
