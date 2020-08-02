@@ -13,6 +13,14 @@
 
         public int MovesCount { get; set; }
 
+        private void DeleteLastCommandFromTheConsole()
+        {
+            Console.SetCursorPosition(0, 15);
+            Console.Write(Constants.InputMessage);
+            Console.Write(new string(' ', 1000));
+            Console.SetCursorPosition(Constants.InputMessage.Length, 15);
+        }
+
         public ProcessGame()
         {
             this.IsGameOver = false;
@@ -34,12 +42,9 @@
 
                 while (!isValidInput)
                 {
-                    Console.SetCursorPosition(0, 15);
-                    Console.Write(Constants.InputMessage);
-                    Console.Write(new string(' ', 1000));
-                    Console.SetCursorPosition(Constants.InputMessage.Length, 15);
+                    this.DeleteLastCommandFromTheConsole();
                     string input = Console.ReadLine();
-                    if (input == "show")
+                    if (input.ToLower() == Constants.ShowCommand)
                     {
                         this.GameBoard.Show();
                     }

@@ -167,8 +167,6 @@
             Point point = new Point(row, col);
             this.coordinates.Add(point);
             this.gameBoard.SetFilledCoordinates(point);
-            Console.SetCursorPosition(0, 16 + this.gameBoard.GetFilledCoordinates().Count);
-            Console.WriteLine($"row: {row}, col: {col}, count: {this.gameBoard.GetFilledCoordinates().Count}");
         }
     }
 }

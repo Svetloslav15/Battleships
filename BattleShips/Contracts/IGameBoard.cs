@@ -6,7 +6,7 @@
 
     public interface IGameBoard
     {
-        void DrawGameBoard(char character);
+        void DrawGameBoard(char character, bool withShips);
 
         bool TryToHit(Point coordinates);
 

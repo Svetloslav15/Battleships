@@ -13,5 +13,6 @@
 
         public const string InputMessage = "Enter coordinates (row, col), e.g. A5 = ";
         public const string GameOverMessage = "Well done! You completed the game in {0} shots";
+        public const string ShowCommand = "show";
     }
 }

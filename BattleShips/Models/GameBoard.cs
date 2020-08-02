@@ -23,7 +23,7 @@
             this.coordinatesHitted = new List<Point>();
             this.coordinatesMissed = new List<Point>();
 
-            this.DrawGameBoard(Constants.NoShot);
+            this.DrawGameBoard(Constants.NoShot, false);
             this.ships = new List<Ship>()
             {
                 new Battleship(this),
@@ -41,8 +41,9 @@
             return gameBoardInstance;
         }
 
-        public void DrawGameBoard(char character)
+        public void DrawGameBoard(char character, bool withShips)
         {
+            Console.SetCursorPosition(0, 0);
             for (int counter = 0; counter <= boardSize; counter++)
             {
                 Console.Write($"{counter}");
@@ -53,7 +54,14 @@
                 Console.Write($"{row}");
                 for (int col = 1; col <= boardSize; col++)
                 {
-                    Console.Write($"{character}");
+                    if (withShips && this.GetFilledCoordinates().Any(ship => ship.Row == (int)(row - 'A') - 1 && ship.Col == col - 1))
+                    {
+                        Console.Write(Constants.ShotHit);
+                    }
+                    else
+                    {
+                        Console.Write($"{character}");
+                    }
                 }
                 Console.WriteLine();
             }
@@ -97,12 +105,11 @@
 
         public void Show()
         {
-            this.DrawGameBoard(Constants.Space);
+            this.DrawGameBoard(Constants.Space, true);
         }
 
         public bool IsOver()
         {
-            Console.SetCursorPosition(0, 29);
             return this.coordinatesHitted.Count == this.filledCoordinates.Count;
         }
     }
