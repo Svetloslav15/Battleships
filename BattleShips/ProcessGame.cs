@@ -21,6 +21,7 @@
 
         public void GameOver()
         {
+            this.IsGameOver = true;
             Console.SetCursorPosition(0, 15);
             Console.Write(Constants.GameOverMessage, this.MovesCount);
         }
@@ -35,7 +36,7 @@
                 {
                     Console.SetCursorPosition(0, 15);
                     Console.Write(Constants.InputMessage);
-                    Console.Write("    ");
+                    Console.Write(new string(' ', 1000));
                     Console.SetCursorPosition(Constants.InputMessage.Length, 15);
                     string input = Console.ReadLine();
                     if (input == "show")
@@ -44,13 +45,33 @@
                     }
                     else
                     {
-                        isValidInput = this.GameBoard.TryToHit(new Point(input));
+                        Point point = new Point(input);
+                        if (!this.CheckUserInput(point))
+                        {
+                            continue;
+                        } 
+
+                        isValidInput = this.GameBoard.TryToHit(point);
                     }
                 }
                 this.MovesCount++;
+                
+                if (this.GameBoard.IsOver())
+                {
+                    this.GameOver();
+                }
             }
         }
 
+        public bool CheckUserInput(Point point)
+        {
+            if (point.Row < 0 || point.Row > 10 || point.Col < 0 || point.Col > 10)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         public void StartGame()
         {

@@ -17,5 +17,7 @@
         HashSet<Point> GetFilledCoordinates();
 
         void Show();
+
+        bool IsOver();
     }
 }
