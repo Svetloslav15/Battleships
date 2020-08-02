@@ -8,16 +8,16 @@
     {
         void DrawGameBoard(char character, bool withShips);
 
+        void SetFilledCoordinates(Point point);
+
         bool TryToHit(Point coordinates);
 
-        void SetFilledCoordinates(Point point);
+        bool IsOver();
 
         bool IsPointFilled(Point point);
 
         HashSet<Point> GetFilledCoordinates();
 
         void Show();
-
-        bool IsOver();
     }
 }

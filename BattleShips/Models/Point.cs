@@ -20,8 +20,10 @@
             this.Col = col;
         }
 
+        //Validate the coordinates to be on the gameboard
         private void ValidateCoordinates(string coordinates)
         {
+            //Check if the cooridates are in the valid format 2 or 3 symbols
             if (coordinates.Length > 3)
             {
                 this.Col = -1;

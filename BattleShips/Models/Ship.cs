@@ -16,6 +16,7 @@
 
         private readonly GameBoard gameBoard;
 
+        //Generating coordindates of the ship
         private void CreateShip()
         {
             HashSet<Direction> directions = RandomService.GenerateSequenceOfDirections();
@@ -32,20 +33,24 @@
             {
                 if (directions.Count == 0)
                 {
+                    //Generate first point of the ship and the order of directions we will try to create the body of the ship
                     directions = RandomService.GenerateSequenceOfDirections();
                     firstPoint = RandomService.GeneratePoint();
                 }
+                
+                //Choose the direction in which the computer will try to create a ship
                 Direction direction = directions.First();
-
                 switch (direction)
                 {
                     case Direction.Top:
                         {
+                            //Check if there is enough space on the top for the ship
                             if (firstPoint.Row - this.Size >= 0)
                             {
                                 int counter = 0;
                                 bool isSpaceAvailable = true;
 
+                                //Check if any of the points is overlaping
                                 for (int row = firstPoint.Row; counter++ < this.Size; row--)
                                 {
                                     Point point = new Point(row, firstPoint.Col);
@@ -57,6 +62,7 @@
                                 }
                                 if (isSpaceAvailable)
                                 {
+                                    //Add ship to the gameboard
                                     for (int row = firstPoint.Row; this.coordinates.Count < this.Size; row--)
                                     {
                                         this.AddPoint(row, firstPoint.Col);
@@ -67,10 +73,13 @@
                         break;
                     case Direction.Right:
                         {
+                            //Check if there is enough space on the right for the ship
                             if (firstPoint.Col + this.Size < Constants.BoardSize)
                             {
                                 int counter = 0;
                                 bool isSpaceAvailable = true;
+
+                                //Check if any of the points is overlaping
                                 for (int col = firstPoint.Col; counter++ < this.Size; col++)
                                 {
                                     Point point = new Point(firstPoint.Row, col);
@@ -82,6 +91,7 @@
                                 }
                                 if (isSpaceAvailable)
                                 {
+                                    //Add ship to the gameboard
                                     for (int col = firstPoint.Col; this.coordinates.Count < this.Size; col++)
                                     {
                                         this.AddPoint(firstPoint.Row, col);
@@ -92,10 +102,13 @@
                         break;
                     case Direction.Bottom:
                         {
+                            //Check if there is enough space at the bottom for the ship
                             if (firstPoint.Row + 1 + this.Size < Constants.BoardSize)
                             {
                                 int counter = 0;
                                 bool isSpaceAvailable = true;
+
+                                //Check if any of the points is overlaping
                                 for (int row = firstPoint.Row; counter++ < this.Size; row++)
                                 {
                                     Point point = new Point(row, firstPoint.Col);
@@ -107,6 +120,7 @@
                                 }
                                 if (isSpaceAvailable)
                                 {
+                                    //Add ship to the gameboard
                                     for (int row = firstPoint.Row; this.coordinates.Count < this.Size; row++)
                                     {
                                         this.AddPoint(row, firstPoint.Col);
@@ -117,10 +131,13 @@
                         break;
                     case Direction.Left:
                         {
+                            //Check if there is enough space on the left for the ship
                             if (firstPoint.Col - this.Size >= 0)
                             {
                                 int counter = 0;
                                 bool isSpaceAvailable = true;
+
+                                //Check if any of the points is overlaping
                                 for (int col = firstPoint.Col; counter++ < this.Size; col--)
                                 {
                                     Point point = new Point(firstPoint.Row, col);
@@ -132,6 +149,7 @@
                                 }
                                 if (isSpaceAvailable)
                                 {
+                                    //Add ship to the gameboard
                                     for (int col = firstPoint.Col; this.coordinates.Count < this.Size; col--)
                                     {
                                         this.AddPoint(firstPoint.Row, col);
@@ -141,6 +159,7 @@
                         }
                         break;
                 }
+                //Remove the first direction from the list
                 directions.Remove(direction);
             }
         }
@@ -154,6 +173,7 @@
             this.CreateShip();
         }
 
+        //Add coordinates to the ship
         private void AddPoint(int row, int col)
         {
             Point point = new Point(row, col);
@@ -163,8 +183,10 @@
 
         public bool TryToHit(Point coordinates)
         {
+            //Check if the user is hitting a ship
             if (this.coordinates.Any(point => point.Row == coordinates.Row && point.Col == coordinates.Col))
             {
+                //Draw that the user has hitted a part of the ship
                 this.coordinatesHitted.Add(coordinates);
                 Drawer.Draw(coordinates, Constants.ShotHit);
 
@@ -174,6 +196,7 @@
             return false;
         }
 
+        //Check if all parts of the ship are hitted
         public bool IsDead()
         {
             return this.coordinates.Count == this.coordinatesHitted.Count;

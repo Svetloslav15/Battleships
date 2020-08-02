@@ -8,6 +8,7 @@
 
     public static class RandomService
     {
+        //Generate random point on the gameboard
         public static Point GeneratePoint()
         {
             Random random = new Random();
@@ -16,6 +17,7 @@
             return new Point($"{(char)col}{row}");
         }
 
+        //Generate sequence of directions with random order
         public static HashSet<Direction> GenerateSequenceOfDirections()
         {
             HashSet<Direction> directions = new HashSet<Direction>();
