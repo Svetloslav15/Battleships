@@ -13,14 +13,12 @@
 
         private readonly HashSet<Point> filledCoordinates;
         private readonly IList<Ship> ships;
-        private readonly IList<Point> coordinatesHitted;
         private readonly IList<Point> coordinatesMissed;
 
         private GameBoard(int boardSize)
         {
             this.boardSize = boardSize;
             this.filledCoordinates = new HashSet<Point>();
-            this.coordinatesHitted = new List<Point>();
             this.coordinatesMissed = new List<Point>();
 
             this.DrawGameBoard(Constants.NoShot, false);
@@ -77,6 +75,11 @@
             this.filledCoordinates.Add(point);
         }
 
+        public void AddPointToCoordinatesMissed(Point point)
+        {
+            this.coordinatesMissed.Add(point);
+        }
+
         public bool IsPointFilled(Point point)
         {
             return this.filledCoordinates.FirstOrDefault(currPoint => currPoint.Row == point.Row && currPoint.Col == point.Col) != null;
@@ -89,14 +92,19 @@
                 return false;
             }
 
-            if (this.filledCoordinates.Any(point => point.Row == coordinates.Row && point.Col == coordinates.Col))
+            bool isHitted = false;
+            foreach (Ship ship in ships)
             {
-                this.coordinatesHitted.Add(coordinates);
-                Drawer.Draw(coordinates, Constants.ShotHit);
+                isHitted = ship.TryToHit(coordinates);
+                if (isHitted)
+                {
+                    break;
+                }
             }
-            else
+
+            if (!isHitted)
             {
-                this.coordinatesMissed.Add(coordinates);
+                this.AddPointToCoordinatesMissed(coordinates);
                 Drawer.Draw(coordinates, Constants.ShotMiss);
             }
 
@@ -110,7 +118,7 @@
 
         public bool IsOver()
         {
-            return this.coordinatesHitted.Count == this.filledCoordinates.Count;
+            return this.ships.Where(ship => ship.IsDead()).Count() == Constants.ShipsCount;
         }
     }
 }

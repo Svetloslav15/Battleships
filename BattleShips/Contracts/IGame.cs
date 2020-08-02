@@ -1,6 +1,6 @@
 ﻿namespace BattleShips.Contracts
 {
-    public interface IProccessGame
+    public interface IGame
     {
         void StartGame();
 

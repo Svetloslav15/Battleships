@@ -4,6 +4,8 @@
 
     public interface IShip
     {
-        void DrawShip();
+        bool TryToHit(Point point);
+
+        bool IsDead();
     }
 }

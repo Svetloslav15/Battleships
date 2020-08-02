@@ -4,7 +4,6 @@
     using BattleShips.Enums;
     using BattleShips.Services;
 
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -13,6 +12,8 @@
         public int Size { get; }
 
         private readonly IList<Point> coordinates;
+        private readonly IList<Point> coordinatesHitted;
+
         private readonly GameBoard gameBoard;
 
         private void CreateShip()
@@ -144,22 +145,14 @@
             }
         }
 
+
         public Ship(int size, GameBoard gameBoard)
         {
             this.Size = size;
             this.gameBoard = gameBoard;
             this.coordinates = new List<Point>();
+            this.coordinatesHitted = new List<Point>();
             this.CreateShip();
-            //this.DrawShip();
-        }
-
-        public void DrawShip()
-        {
-            foreach (Point point in coordinates)
-            {
-                Console.SetCursorPosition(point.Col + 1, point. Row + 1);
-                Console.Write(Constants.ShotHit);
-            }
         }
 
         private void AddPoint(int row, int col)
@@ -167,6 +160,24 @@
             Point point = new Point(row, col);
             this.coordinates.Add(point);
             this.gameBoard.SetFilledCoordinates(point);
+        }
+
+        public bool TryToHit(Point coordinates)
+        {
+            if (this.coordinates.Any(point => point.Row == coordinates.Row && point.Col == coordinates.Col))
+            {
+                this.coordinatesHitted.Add(coordinates);
+                Drawer.Draw(coordinates, Constants.ShotHit);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsDead()
+        {
+            return this.coordinates.Count == this.coordinatesHitted.Count;
         }
     }
 }

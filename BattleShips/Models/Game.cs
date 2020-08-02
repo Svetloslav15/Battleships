@@ -5,7 +5,7 @@
 
     using System;
 
-    public class ProcessGame : IProccessGame
+    public class Game : IGame
     {
         public bool IsGameOver { get; set; }
 
@@ -21,7 +21,7 @@
             Console.SetCursorPosition(Constants.InputMessage.Length, 15);
         }
 
-        public ProcessGame()
+        public Game()
         {
             this.IsGameOver = false;
             this.GameBoard = GameBoard.GetInstance();
@@ -70,7 +70,7 @@
 
         public bool CheckUserInput(Point point)
         {
-            if (point.Row < 0 || point.Row > 10 || point.Col < 0 || point.Col > 10)
+            if (point.Row < 0 || point.Row > Constants.BoardSize || point.Col < 0 || point.Col > Constants.BoardSize)
             {
                 return false;
             }

@@ -4,7 +4,7 @@
     {
         public static void Main()
         {
-            ProcessGame game = new ProcessGame();
+            Game game = new Game();
             game.StartGame();
         }
     }

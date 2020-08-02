@@ -1,6 +1,5 @@
 ﻿namespace BattleShips.Services
 {
-    using BattleShips.Contracts;
     using BattleShips.Enums;
     using BattleShips.Models;
     
@@ -12,8 +11,8 @@
         public static Point GeneratePoint()
         {
             Random random = new Random();
-            int row = random.Next(1, 11);
-            int col = random.Next('A', 'J');
+            int row = random.Next(1, Constants.BoardSize + 1);
+            int col = random.Next(Constants.FirstRowLetter, Constants.LastRowLetter);
             return new Point($"{(char)col}{row}");
         }
 
