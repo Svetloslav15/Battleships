@@ -83,7 +83,6 @@
 
             if (this.filledCoordinates.Any(point => point.Row == coordinates.Row && point.Col == coordinates.Col))
             {
-                this.filledCoordinates.Add(coordinates);
                 this.coordinatesHitted.Add(coordinates);
                 Drawer.Draw(coordinates, Constants.ShotHit);
             }
@@ -103,6 +102,7 @@
 
         public bool IsOver()
         {
+            Console.SetCursorPosition(0, 29);
             return this.coordinatesHitted.Count == this.filledCoordinates.Count;
         }
     }
