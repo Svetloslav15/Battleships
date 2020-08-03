@@ -13,6 +13,7 @@
 
         public int MovesCount { get; set; }
 
+        //Check if the user input is on the board
         private bool CheckUserInput(Point point)
         {
             if (point.Row < 0 || point.Row > Constants.BoardSize || point.Col < 0 || point.Col > Constants.BoardSize)
@@ -23,6 +24,7 @@
             return true;
         }
 
+        //Clear the last move of the user, in order to add new
         private void DeleteLastCommandFromTheConsole()
         {
             Console.SetCursorPosition(0, 15);
@@ -37,6 +39,7 @@
             this.GameBoard = GameBoard.GetInstance();
         }
 
+        //Finish the Game
         public void GameOver()
         {
             this.IsGameOver = true;
@@ -44,16 +47,21 @@
             Console.Write(Constants.GameOverMessage, this.MovesCount);
         }
 
+        //Read the user input from the console
         public void ProcessInput()
         {
+            //Read the input until the game is finished
             while(!this.IsGameOver)
             {
                 bool isValidInput = false;
 
+                //Read the input until it is valid
                 while (!isValidInput)
                 {
                     this.DeleteLastCommandFromTheConsole();
                     string input = Console.ReadLine();
+
+                    //Check if the user wants to see where are the ships
                     if (input.ToLower() == Constants.ShowCommand)
                     {
                         this.IsGameOver = true;
@@ -62,6 +70,7 @@
                     }
                     else
                     {
+                        //Check if the user hit a ship
                         Point point = new Point(input);
                         if (!this.CheckUserInput(point))
                         {
@@ -71,6 +80,7 @@
                         isValidInput = this.GameBoard.TryToHit(point);
                     }
                 }
+                //Increment the user moves
                 this.MovesCount++;
                 
                 if (this.GameBoard.IsOver())

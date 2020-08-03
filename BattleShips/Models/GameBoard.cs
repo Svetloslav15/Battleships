@@ -134,6 +134,7 @@
         public void Show()
         {
             this.DrawGameBoard(Constants.Space, true);
+            Console.SetCursorPosition(0, 21);
         }
 
         //Check if all ships are dead
